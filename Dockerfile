@@ -21,8 +21,8 @@ RUN apt-get update -yq --fix-missing \
 # Install ffmpeg using apt-get since conda is not set up
 RUN apt-get update && apt-get install -y ffmpeg
 
-# Install PyTorch and related dependencies via pip
-RUN pip install pytorch==1.12.1 torchvision==0.13.1 cudatoolkit=11.3
+# Instala PyTorch y torchvision con soporte CUDA 11.3 vía pip
+RUN pip install torch==1.12.1+cu113 torchvision==0.13.1+cu113 -f https://download.pytorch.org/whl/torch_stable.html
 
 WORKDIR /APP
 COPY . .
