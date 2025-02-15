@@ -51,5 +51,5 @@ WORKDIR /python_rtmpstream/python
 RUN pip install .
 
 #Copy ../nerfstream /nerfstream
-#WORKDIR /nerfstream
+WORKDIR /nerfstream
 CMD ["python3", "app.py"]
