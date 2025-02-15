@@ -25,16 +25,16 @@ RUN apt-get update -yq --fix-missing \
 #ENV NVIDIA_VISIBLE_DEVICES all
 #ENV NVIDIA_DRIVER_CAPABILITIES compute,utility,graphics
 
-RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-RUN sh Miniconda3-latest-Linux-x86_64.sh -b -u -p ~/miniconda3
-RUN ~/miniconda3/bin/conda init
+#RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+#RUN sh Miniconda3-latest-Linux-x86_64.sh -b -u -p ~/miniconda3
+#RUN ~/miniconda3/bin/conda init
 #RUN source ~/.bashrc
-RUN conda create -n nerfstream python=3.10
-RUN conda activate nerfstream
+#RUN conda create -n nerfstream python=3.10
+#RUN conda activate nerfstream
 
 RUN pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/
 # install depend
-RUN conda install pytorch==1.12.1 torchvision==0.13.1 cudatoolkit=11.3 -c pytorch
+RUN pip install pytorch==1.12.1 torchvision==0.13.1 cudatoolkit=11.3 -c pytorch
 WORKDIR /APP
 COPY . .
 #Copy requirements.txt ./
