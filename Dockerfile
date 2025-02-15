@@ -32,7 +32,7 @@ RUN apt-get update -yq --fix-missing \
 #RUN conda create -n nerfstream python=3.10
 #RUN conda activate nerfstream
 
-RUN pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/
+#RUN pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/
 # install depend
 RUN pip install pytorch==1.12.1 torchvision==0.13.1 cudatoolkit=11.3 -c pytorch
 WORKDIR /APP
