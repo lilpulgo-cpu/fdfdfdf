@@ -19,8 +19,7 @@ RUN apt-get update -yq --fix-missing && \
       git \
       vim \
       ffmpeg && \
-    apt-get clean && rm -rf /var/lib/apt/lists/* && \
-    ln -s /usr/bin/pip3 /usr/bin/pip
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # ENV PYTHONDONTWRITEBYTECODE=1
 # ENV PYTHONUNBUFFERED=1
