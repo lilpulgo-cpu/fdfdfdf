@@ -8,18 +8,36 @@
 ARG BASE_IMAGE=nvcr.io/nvidia/cuda:11.6.1-cudnn8-devel-ubuntu20.04
 FROM ${BASE_IMAGE}
 
-RUN apt-get update -yq --fix-missing \
- && DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends \
-    pkg-config \
-    wget \
-    cmake \
-    curl \
-    git \
-    vim \
- && apt-get clean && rm -rf /var/lib/apt/lists/*
+# Actualiza apt-get e instala las dependencias necesarias, incluyendo python3-pip y ffmpeg.
+RUN apt-get update -yq --fix-missing && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends \
+      python3-pip \
+      pkg-config \
+      wget \
+      cmake \
+      curl \
+      git \
+      vim \
+      ffmpeg && \
+    apt-get clean && rm -rf /var/lib/apt/lists/* && \
+    ln -s /usr/bin/pip3 /usr/bin/pip
 
-# Install ffmpeg using apt-get since conda is not set up
-RUN apt-get update && apt-get install -y ffmpeg
+# ENV PYTHONDONTWRITEBYTECODE=1
+# ENV PYTHONUNBUFFERED=1
+
+# nvidia-container-runtime
+# ENV NVIDIA_VISIBLE_DEVICES all
+# ENV NVIDIA_DRIVER_CAPABILITIES compute,utility,graphics
+
+# Las siguientes líneas con conda se mantienen comentadas
+# RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+# RUN sh Miniconda3-latest-Linux-x86_64.sh -b -u -p ~/miniconda3
+# RUN ~/miniconda3/bin/conda init
+# RUN source ~/.bashrc
+# RUN conda create -n nerfstream python=3.10
+# RUN conda activate nerfstream
+
+# RUN pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/
 
 # Instala PyTorch y torchvision con soporte CUDA 11.3 vía pip
 RUN pip install torch==1.12.1+cu113 torchvision==0.13.1+cu113 -f https://download.pytorch.org/whl/torch_stable.html
@@ -27,17 +45,16 @@ RUN pip install torch==1.12.1+cu113 torchvision==0.13.1+cu113 -f https://downloa
 WORKDIR /APP
 COPY . .
 
-# Install Python dependencies
+# Instala las dependencias listadas en requirements.txt
 RUN pip install -r requirements.txt
 
-# Install additional libraries
+# Instala librerías adicionales
 RUN pip install "git+https://github.com/facebookresearch/pytorch3d.git"
 RUN pip install tensorflow-gpu==2.8.0
 
-# Ensure compatible protobuf version
 RUN pip uninstall -y protobuf && pip install protobuf==3.20.1
 
-# Install the python_rtmpstream package
+# Instala el paquete python_rtmpstream
 WORKDIR /python_rtmpstream/python
 RUN pip install .
 
