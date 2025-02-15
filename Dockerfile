@@ -39,8 +39,8 @@ RUN apt-get update -yq --fix-missing && \
 
 # RUN pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/
 
-# Instala PyTorch y torchvision con soporte CUDA 11.3 vía pip
-RUN pip install torch==1.12.1+cu113 torchvision==0.13.1+cu113 -f https://download.pytorch.org/whl/torch_stable.html
+# Instala PyTorch y torchvision con soporte CUDA 11.6 vía pip (ajustado para coincidir con la imagen base CUDA)
+RUN pip install torch==1.12.1+cu116 torchvision==0.13.1+cu116 -f https://download.pytorch.org/whl/torch_stable.html
 
 WORKDIR /APP
 COPY . .
