@@ -35,7 +35,9 @@ RUN conda activate nerfstream
 RUN pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/
 # install depend
 RUN conda install pytorch==1.12.1 torchvision==0.13.1 cudatoolkit=11.3 -c pytorch
-Copy requirements.txt ./
+WORKDIR /APP
+COPY . .
+#Copy requirements.txt ./
 RUN pip install -r requirements.txt
 
 # additional libraries
@@ -51,5 +53,5 @@ WORKDIR /python_rtmpstream/python
 RUN pip install .
 
 #Copy ../nerfstream /nerfstream
-WORKDIR /nerfstream
+WORKDIR /APP
 CMD ["python3", "app.py"]
