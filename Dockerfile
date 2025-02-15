@@ -28,7 +28,7 @@ RUN apt-get update -yq --fix-missing \
 RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 RUN sh Miniconda3-latest-Linux-x86_64.sh -b -u -p ~/miniconda3
 RUN ~/miniconda3/bin/conda init
-RUN source ~/.bashrc
+#RUN source ~/.bashrc
 RUN conda create -n nerfstream python=3.10
 RUN conda activate nerfstream
 
